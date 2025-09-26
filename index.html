@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arcabuz Interactive - Game Development Studio</title>
-    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    <link rel="icon" type="image/png" href="assets/images/ArcabuzInteractiveSecondaryLogoZoomed.png">
     <link rel="shortcut icon" type="image/png" href="assets/images/ArcabuzInteractiveSecondaryLogoZoomed.png">
     <style>
         * {
@@ -38,6 +38,43 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 2rem;
+        }
+
+        .nav-center {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .language-flag {
+            width: 24px;
+            height: 18px;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            opacity: 0.7;
+        }
+
+        .language-flag:hover {
+            opacity: 1;
+            transform: scale(1.1);
+            box-shadow: 0 2px 8px rgba(67, 202, 217, 0.4);
+        }
+
+        .language-flag.active {
+            opacity: 1;
+            box-shadow: 0 0 0 2px #43CAD9;
         }
 
         .nav-logo {
@@ -215,9 +252,14 @@
                 height: 35px;
             }
             
-            nav ul {
+            .nav-center ul {
                 gap: 1rem;
                 flex-wrap: wrap;
+            }
+
+            .language-flag {
+                width: 20px;
+                height: 15px;
             }
             
             .container {
@@ -231,12 +273,22 @@
     <nav>
         <div class="nav-container">
             <img src="assets/images/ArcabuzInteractiveLogoTransparentNarrow.png" alt="Arcabuz Interactive" class="nav-logo" onclick="showPage('home')">
-            <ul>
-                <li><a href="#" onclick="showPage('home')" class="active">Home</a></li>
-                <li><a href="#" onclick="showPage('about')">About</a></li>
-                <li><a href="#" onclick="showPage('games')">Games</a></li>
-                <li><a href="#" onclick="showPage('contact')">Contact</a></li>
-            </ul>
+            
+            <div class="nav-center">
+                <ul>
+                    <li><a href="#" onclick="showPage('home')" class="active">Home</a></li>
+                    <li><a href="#" onclick="showPage('about')">About</a></li>
+                    <li><a href="#" onclick="showPage('games')">Games</a></li>
+                    <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="nav-right">
+                <div class="language-selector">
+                    <img src="https://flagcdn.com/w40/gb-eng.png" alt="English" class="language-flag active" onclick="switchLanguage('en')" title="English">
+                    <img src="https://flagcdn.com/w40/es.png" alt="Español" class="language-flag" onclick="switchLanguage('es')" title="Español">
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -362,6 +414,252 @@
     </footer>
 
     <script>
+        let currentLanguage = 'en';
+
+        const translations = {
+            en: {
+                nav: {
+                    home: 'Home',
+                    about: 'About', 
+                    games: 'Games',
+                    contact: 'Contact'
+                },
+                home: {
+                    heroDescription: 'Crafting immersive gaming experiences that push the boundaries of interactive entertainment',
+                    whatWeDo: 'What We Do',
+                    whatWeDoText: 'At Arcabuz Interactive, we\'re passionate about creating games that captivate players and tell compelling stories. Our focus is on innovative gameplay mechanics, stunning visuals, and memorable experiences that keep players coming back for more.',
+                    gameDev: 'Game Development',
+                    gameDevText: 'From concept to launch, we handle every aspect of game development with precision and creativity.',
+                    interactiveDesign: 'Interactive Design',
+                    interactiveDesignText: 'We craft user experiences that are intuitive, engaging, and built for modern gaming platforms.',
+                    techInnovation: 'Technical Innovation',
+                    techInnovationText: 'Leveraging cutting-edge technology to bring unique gaming concepts to life.'
+                },
+                about: {
+                    title: 'About Arcabuz Interactive',
+                    description1: 'Founded with a vision to create unforgettable gaming experiences, Arcabuz Interactive represents the next generation of game development studios. We believe in the power of interactive entertainment to bring people together, challenge minds, and create lasting memories.',
+                    description2: 'Our name "Arcabuz" reflects our commitment to precision and impact – just as the historical arcabuz was a revolutionary tool of its time, we aim to revolutionize the gaming industry with innovative approaches and cutting-edge technology.',
+                    mission: 'Our Mission',
+                    missionText: 'To develop games that not only entertain but inspire, creating worlds where players can explore, compete, and connect in meaningful ways. We\'re committed to pushing the boundaries of what\'s possible in interactive entertainment while maintaining the highest standards of quality and player satisfaction.',
+                    innovation: 'Innovation First',
+                    innovationText: 'We\'re constantly exploring new technologies and gameplay mechanics to deliver fresh experiences.',
+                    playerFocused: 'Player-Focused',
+                    playerFocusedText: 'Every decision we make is guided by what will create the best possible experience for our players.',
+                    quality: 'Quality Driven',
+                    qualityText: 'We believe in polished, well-crafted games that stand the test of time.'
+                },
+                games: {
+                    title: 'Our Games',
+                    description: 'We\'re currently in the exciting early stages of development, with several innovative projects in the works. Stay tuned for updates on our upcoming releases!',
+                    comingSoon: 'Coming Soon',
+                    comingSoonText: 'We\'re working on something amazing. Follow us for updates on our first major release!',
+                    inDevelopment: 'In Development',
+                    inDevelopmentText: 'Multiple projects are currently in various stages of development. Exciting announcements coming soon.',
+                    futureProjects: 'Future Projects',
+                    futureProjectsText: 'We have big plans for the future. Join our journey as we build the next generation of gaming experiences.',
+                    getUpdates: 'Want to be the first to know about our releases?',
+                    getUpdatesBtn: 'Get Updates'
+                },
+                contact: {
+                    title: 'Get In Touch',
+                    description: 'Ready to collaborate or just want to chat about gaming? We\'d love to hear from you!',
+                    letsConnect: 'Let\'s Connect',
+                    connectDescription: 'Ready to start a conversation? Drop us a line and we\'ll get back to you as soon as possible.',
+                    businessEmail: 'Business Email',
+                    copyText: 'Click the button below to copy email address',
+                    copyBtn: 'Copy Email Address'
+                },
+                footer: {
+                    copyright: '© 2025 Arcabuz Interactive. All rights reserved.',
+                    tagline: 'Crafting the future of interactive entertainment'
+                }
+            },
+            es: {
+                nav: {
+                    home: 'Inicio',
+                    about: 'Acerca de',
+                    games: 'Juegos', 
+                    contact: 'Contacto'
+                },
+                home: {
+                    heroDescription: 'Creando experiencias de juego inmersivas que empujan los límites del entretenimiento interactivo',
+                    whatWeDo: 'Lo Que Hacemos',
+                    whatWeDoText: 'En Arcabuz Interactive, nos apasiona crear juegos que cautiven a los jugadores y cuenten historias convincentes. Nos enfocamos en mecánicas de juego innovadoras, visuales impresionantes y experiencias memorables que mantengan a los jugadores regresando por más.',
+                    gameDev: 'Desarrollo de Juegos',
+                    gameDevText: 'Desde el concepto hasta el lanzamiento, manejamos cada aspecto del desarrollo de juegos con precisión y creatividad.',
+                    interactiveDesign: 'Diseño Interactivo',
+                    interactiveDesignText: 'Creamos experiencias de usuario que son intuitivas, atractivas y construidas para plataformas de juego modernas.',
+                    techInnovation: 'Innovación Técnica',
+                    techInnovationText: 'Aprovechando tecnología de vanguardia para dar vida a conceptos de juego únicos.'
+                },
+                about: {
+                    title: 'Acerca de Arcabuz Interactive',
+                    description1: 'Fundada con la visión de crear experiencias de juego inolvidables, Arcabuz Interactive representa la próxima generación de estudios de desarrollo de juegos. Creemos en el poder del entretenimiento interactivo para unir a las personas, desafiar mentes y crear recuerdos duraderos.',
+                    description2: 'Nuestro nombre "Arcabuz" refleja nuestro compromiso con la precisión y el impacto: así como el arcabuz histórico fue una herramienta revolucionaria de su época, aspiramos a revolucionar la industria del juego con enfoques innovadores y tecnología de vanguardia.',
+                    mission: 'Nuestra Misión',
+                    missionText: 'Desarrollar juegos que no solo entretengan sino que inspiren, creando mundos donde los jugadores puedan explorar, competir y conectarse de manera significativa. Estamos comprometidos a empujar los límites de lo posible en entretenimiento interactivo mientras mantenemos los más altos estándares de calidad y satisfacción del jugador.',
+                    innovation: 'Innovación Primero',
+                    innovationText: 'Constantemente exploramos nuevas tecnologías y mecánicas de juego para ofrecer experiencias frescas.',
+                    playerFocused: 'Enfocados en el Jugador',
+                    playerFocusedText: 'Cada decisión que tomamos se guía por lo que creará la mejor experiencia posible para nuestros jugadores.',
+                    quality: 'Orientados a la Calidad',
+                    qualityText: 'Creemos en juegos pulidos y bien elaborados que resistan el paso del tiempo.'
+                },
+                games: {
+                    title: 'Nuestros Juegos',
+                    description: '¡Actualmente estamos en las emocionantes etapas iniciales de desarrollo, con varios proyectos innovadores en proceso. Mantente atento a las actualizaciones sobre nuestros próximos lanzamientos!',
+                    comingSoon: 'Próximamente',
+                    comingSoonText: '¡Estamos trabajando en algo increíble. Síguenos para actualizaciones sobre nuestro primer gran lanzamiento!',
+                    inDevelopment: 'En Desarrollo',
+                    inDevelopmentText: 'Múltiples proyectos están actualmente en varias etapas de desarrollo. Próximamente anuncios emocionantes.',
+                    futureProjects: 'Proyectos Futuros',
+                    futureProjectsText: 'Tenemos grandes planes para el futuro. Únete a nuestro viaje mientras construimos la próxima generación de experiencias de juego.',
+                    getUpdates: '¿Quieres ser el primero en saber sobre nuestros lanzamientos?',
+                    getUpdatesBtn: 'Obtener Actualizaciones'
+                },
+                contact: {
+                    title: 'Ponte en Contacto',
+                    description: '¿Listo para colaborar o simplemente quieres charlar sobre juegos? ¡Nos encantaría saber de ti!',
+                    letsConnect: 'Conectemos',
+                    connectDescription: '¿Listo para iniciar una conversación? Envíanos un mensaje y te responderemos lo antes posible.',
+                    businessEmail: 'Email de Negocios',
+                    copyText: 'Haz clic en el botón de abajo para copiar la dirección de email',
+                    copyBtn: 'Copiar Dirección de Email'
+                },
+                footer: {
+                    copyright: '© 2025 Arcabuz Interactive. Todos los derechos reservados.',
+                    tagline: 'Creando el futuro del entretenimiento interactivo'
+                }
+            }
+        };
+
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update flag states
+            document.querySelectorAll('.language-flag').forEach(flag => {
+                flag.classList.remove('active');
+            });
+            document.querySelector(`[onclick="switchLanguage('${lang}')"]`).classList.add('active');
+            
+            updateContent();
+        }
+
+        function updateContent() {
+            const t = translations[currentLanguage];
+            
+            // Update navigation
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks[0].textContent = t.nav.home;
+            navLinks[1].textContent = t.nav.about;
+            navLinks[2].textContent = t.nav.games;
+            navLinks[3].textContent = t.nav.contact;
+            
+            // Update home page
+            const heroDesc = document.querySelector('.hero-description');
+            if (heroDesc) heroDesc.textContent = t.home.heroDescription;
+            
+            const homeSection = document.querySelector('#home .section');
+            if (homeSection) {
+                homeSection.querySelector('h2').textContent = t.home.whatWeDo;
+                homeSection.querySelector('p').textContent = t.home.whatWeDoText;
+                
+                const cards = homeSection.querySelectorAll('.card');
+                if (cards[0]) {
+                    cards[0].querySelector('h3').textContent = t.home.gameDev;
+                    cards[0].querySelector('p').textContent = t.home.gameDevText;
+                }
+                if (cards[1]) {
+                    cards[1].querySelector('h3').textContent = t.home.interactiveDesign;
+                    cards[1].querySelector('p').textContent = t.home.interactiveDesignText;
+                }
+                if (cards[2]) {
+                    cards[2].querySelector('h3').textContent = t.home.techInnovation;
+                    cards[2].querySelector('p').textContent = t.home.techInnovationText;
+                }
+            }
+            
+            // Update about page
+            const aboutSection = document.querySelector('#about .section');
+            if (aboutSection) {
+                const headings = aboutSection.querySelectorAll('h2');
+                const paragraphs = aboutSection.querySelectorAll('p');
+                const cards = aboutSection.querySelectorAll('.card');
+                
+                if (headings[0]) headings[0].textContent = t.about.title;
+                if (headings[1]) headings[1].textContent = t.about.mission;
+                if (paragraphs[0]) paragraphs[0].textContent = t.about.description1;
+                if (paragraphs[1]) paragraphs[1].textContent = t.about.description2;
+                if (paragraphs[2]) paragraphs[2].textContent = t.about.missionText;
+                
+                if (cards[0]) {
+                    cards[0].querySelector('h3').textContent = t.about.innovation;
+                    cards[0].querySelector('p').textContent = t.about.innovationText;
+                }
+                if (cards[1]) {
+                    cards[1].querySelector('h3').textContent = t.about.playerFocused;
+                    cards[1].querySelector('p').textContent = t.about.playerFocusedText;
+                }
+                if (cards[2]) {
+                    cards[2].querySelector('h3').textContent = t.about.quality;
+                    cards[2].querySelector('p').textContent = t.about.qualityText;
+                }
+            }
+            
+            // Update games page
+            const gamesSection = document.querySelector('#games .section');
+            if (gamesSection) {
+                const heading = gamesSection.querySelector('h2');
+                const description = gamesSection.querySelector('p');
+                const cards = gamesSection.querySelectorAll('.card');
+                const updateText = gamesSection.querySelector('div[style*="text-align: center"] p');
+                const updateBtn = gamesSection.querySelector('.btn');
+                
+                if (heading) heading.textContent = t.games.title;
+                if (description) description.textContent = t.games.description;
+                if (updateText) updateText.textContent = t.games.getUpdates;
+                if (updateBtn) updateBtn.textContent = t.games.getUpdatesBtn;
+                
+                if (cards[0]) {
+                    cards[0].querySelector('h3').textContent = t.games.comingSoon;
+                    cards[0].querySelector('p').textContent = t.games.comingSoonText;
+                }
+                if (cards[1]) {
+                    cards[1].querySelector('h3').textContent = t.games.inDevelopment;
+                    cards[1].querySelector('p').textContent = t.games.inDevelopmentText;
+                }
+                if (cards[2]) {
+                    cards[2].querySelector('h3').textContent = t.games.futureProjects;
+                    cards[2].querySelector('p').textContent = t.games.futureProjectsText;
+                }
+            }
+            
+            // Update contact page
+            const contactSection = document.querySelector('#contact .section');
+            if (contactSection) {
+                const heading = contactSection.querySelector('h2');
+                const description = contactSection.querySelector('p');
+                const cardTitle = contactSection.querySelector('.card h3');
+                const cardDesc = contactSection.querySelector('.card p');
+                const emailLabel = contactSection.querySelector('div[style*="background"] p:first-child');
+                const copyText = contactSection.querySelector('div[style*="background"] p:last-child');
+                const copyBtn = contactSection.querySelector('.btn');
+                
+                if (heading) heading.textContent = t.contact.title;
+                if (description) description.textContent = t.contact.description;
+                if (cardTitle) cardTitle.textContent = t.contact.letsConnect;
+                if (cardDesc) cardDesc.textContent = t.contact.connectDescription;
+                if (emailLabel) emailLabel.innerHTML = `📧 ${t.contact.businessEmail}`;
+                if (copyText) copyText.textContent = t.contact.copyText;
+                if (copyBtn) copyBtn.textContent = t.contact.copyBtn;
+            }
+            
+            // Update footer
+            const footerParagraphs = document.querySelectorAll('footer p');
+            if (footerParagraphs[0]) footerParagraphs[0].textContent = t.footer.copyright;
+            if (footerParagraphs[1]) footerParagraphs[1].textContent = t.footer.tagline;
+        }
+
         function showPage(pageId) {
             // Hide all pages
             const pages = document.querySelectorAll('.page');
